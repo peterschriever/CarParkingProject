@@ -26,6 +26,8 @@ public class SimulatorView extends JFrame {
         setVisible(true);
 
         updateView();
+
+
     }
 
     public void updateView() {
