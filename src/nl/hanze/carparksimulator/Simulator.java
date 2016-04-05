@@ -64,8 +64,15 @@ public class Simulator {
 
         // Add the cars to the back of the queue.
         for (int i = 0; i < numberOfCarsPerMinute; i++) {
-            Car car = new AdHocCar();
-            entranceCarQueue.addCar(car);
+            int rand = random.nextInt(100) + 1;
+            if(rand >= 1 && rand <= 70){
+                Car car = new AdHocCar();
+                entranceCarQueue.addCar(car);
+            }
+            else {
+                Car car = new ParkingPass();
+                entranceCarQueue.addCar(car);
+            }
         }
 
         // Remove car from the front of the queue and assign to a parking space.
@@ -92,8 +99,12 @@ public class Simulator {
             if (car == null) {
                 break;
             }
-            car.setIsPaying(true);
-            paymentCarQueue.addCar(car);
+            if(car instanceof AdHocCar) {
+                car.setIsPaying(true);
+                paymentCarQueue.addCar(car);
+            } else {
+                exitCarQueue.addCar(car);
+            }
         }
 
         // Let cars pay.
