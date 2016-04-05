@@ -10,8 +10,6 @@ public abstract class Car {
      * Constructor for objects of class nl.hanze.carparksimulator.Car
      */
     public Car() {
-        String newStr = "abc";
-
     }
 
     public Location getLocation() {

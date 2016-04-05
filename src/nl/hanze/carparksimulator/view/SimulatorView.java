@@ -1,7 +1,12 @@
-package nl.hanze.carparksimulator;
+package nl.hanze.carparksimulator.view;
+
+import nl.hanze.carparksimulator.Car;
+import nl.hanze.carparksimulator.Location;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class SimulatorView extends JFrame {
     private CarParkView carParkView;
@@ -10,25 +15,44 @@ public class SimulatorView extends JFrame {
     private int numberOfPlaces;
     private Car[][][] cars;
 
+
     public SimulatorView(int numberOfFloors, int numberOfRows, int numberOfPlaces) {
         this.numberOfFloors = numberOfFloors;
         this.numberOfRows = numberOfRows;
         this.numberOfPlaces = numberOfPlaces;
         cars = new Car[numberOfFloors][numberOfRows][numberOfPlaces];
-
         carParkView = new CarParkView();
+        JButton oneStep = new JButton("One Step");
+        JButton hundredStep = new JButton("Hundred Steps");
+
 
         Container contentPane = getContentPane();
         //contentPane.add(stepLabel, BorderLayout.NORTH);
         contentPane.add(carParkView, BorderLayout.CENTER);
+        contentPane.add(oneStep, BorderLayout.NORTH);
+        contentPane.add(hundredStep, BorderLayout.SOUTH);
+
         //contentPane.add(population, BorderLayout.SOUTH);
         pack();
         setVisible(true);
+
+        oneStep.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Main.instance.run(1);
+            }
+        });
+
+        hundredStep.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Main.instance.run(100);
+            }
+        });
 
         updateView();
 
 
     }
+
 
     public void updateView() {
         carParkView.updateView();
