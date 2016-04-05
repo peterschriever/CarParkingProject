@@ -70,7 +70,7 @@ public class Simulator {
                 entranceCarQueue.addCar(car);
             }
             else {
-                Car car = new ParkingPass();
+                Car car = new ParkingPassCar();
                 entranceCarQueue.addCar(car);
             }
         }
