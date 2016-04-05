@@ -103,6 +103,7 @@ public class Simulator {
                 car.setIsPaying(true);
                 paymentCarQueue.addCar(car);
             } else {
+                car.setIsPaying(true);
                 exitCarQueue.addCar(car);
             }
         }
@@ -114,7 +115,7 @@ public class Simulator {
                 break;
             }
             // TODO Handle payment.
-            simulatorView.removeCarAt(car.getLocation());
+
             exitCarQueue.addCar(car);
         }
 
@@ -124,6 +125,8 @@ public class Simulator {
             if (car == null) {
                 break;
             }
+            simulatorView.removeCarAt(car.getLocation());
+
             // Bye!
         }
 
