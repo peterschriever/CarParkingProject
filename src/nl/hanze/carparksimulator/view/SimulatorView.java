@@ -2,13 +2,14 @@ package nl.hanze.carparksimulator.view;
 
 import nl.hanze.carparksimulator.Car;
 import nl.hanze.carparksimulator.Location;
+import nl.hanze.carparksimulator.main.Main;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class SimulatorView extends JFrame {
+public class SimulatorView extends AbstractView {
     private CarParkView carParkView;
     private int numberOfFloors;
     private int numberOfRows;
@@ -156,7 +157,7 @@ public class SimulatorView extends JFrame {
         return true;
     }
 
-    private class CarParkView extends JPanel {
+    private class CarParkView extends AbstractView {
 
         private Dimension size;
         private Image carParkImage;

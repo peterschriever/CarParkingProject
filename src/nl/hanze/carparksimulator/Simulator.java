@@ -1,5 +1,7 @@
 package nl.hanze.carparksimulator;
 
+import nl.hanze.carparksimulator.view.SimulatorView;
+
 import java.util.Random;
 
 public class Simulator {

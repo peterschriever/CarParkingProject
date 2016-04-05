@@ -15,12 +15,6 @@ public abstract class AbstractController extends JPanel {
     private List<AbstractView> views;
 
     public AbstractController() {
-        JButton jb = new JButton("text");
-        jb.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                System.out.println("do something");
-            }
-        });
+
     }
 }

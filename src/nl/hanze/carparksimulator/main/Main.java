@@ -11,7 +11,6 @@ public class Main {
     public static final Simulator instance = new Simulator();
 
     public static void main(String[] args) {
-        instance.run();
     }
 
 }
