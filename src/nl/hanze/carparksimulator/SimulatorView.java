@@ -200,8 +200,18 @@ public class SimulatorView extends JFrame {
                     for (int place = 0; place < getNumberOfPlaces(); place++) {
                         Location location = new Location(floor, row, place);
                         Car car = getCarAt(location);
-                        Color color = car == null ? Color.white : Color.red;
-                        drawPlace(graphics, location, color);
+                        Color color;
+                        if (car == null) {
+                            color = Color.white;
+                        } else {
+                            if (car instanceof AdHocCar) {
+                                color = Color.red;
+                            } else {
+                                color = Color.BLUE;
+                            }
+                        }
+                            drawPlace(graphics, location, color);
+
                     }
                 }
             }
