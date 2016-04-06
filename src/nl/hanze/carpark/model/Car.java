@@ -1,4 +1,4 @@
-package nl.hanze.carparksimulator;
+package nl.hanze.carpark.model;
 
 public abstract class Car {
 
@@ -7,7 +7,7 @@ public abstract class Car {
     private boolean isPaying;
 
     /**
-     * Constructor for objects of class nl.hanze.carparksimulator.Car
+     * Constructor for objects of class testpackage.mvc.Car
      */
     public Car() {
 

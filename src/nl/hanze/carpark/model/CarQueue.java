@@ -1,4 +1,4 @@
-package nl.hanze.carparksimulator;
+package nl.hanze.carpark.model;
 
 import java.util.LinkedList;
 import java.util.Queue;

@@ -1,4 +1,4 @@
-package nl.hanze.carparksimulator;
+package nl.hanze.carpark.model;
 
 /**
  * Created by Gabe on 4-4-2016.

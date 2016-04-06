@@ -1,4 +1,4 @@
-package nl.hanze.carparksimulator;
+package nl.hanze.carpark.model;
 
 public class AdHocCar extends Car {
 

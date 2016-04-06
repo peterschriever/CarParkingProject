@@ -1,4 +1,4 @@
-package nl.hanze.carparksimulator;
+package nl.hanze.carpark.model;
 
 public class Location {
 
@@ -7,7 +7,7 @@ public class Location {
     private int place;
 
     /**
-     * Constructor for objects of class nl.hanze.carparksimulator.Location
+     * Constructor for objects of class testpackage.mvc.Location
      */
     public Location(int floor, int row, int place) {
         this.floor = floor;
