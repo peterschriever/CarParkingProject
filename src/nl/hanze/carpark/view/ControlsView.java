@@ -10,31 +10,28 @@ import java.awt.*;
  * Created by peterzen on 4/6/16.
  * Part of the CarParkingProject project.
  */
-public class SimulatorView extends AbstractView {
-
-    private int numberOfFloors;
-    private int numberOfRows;
-    private int numberOfPlaces;
+public class ControlsView extends AbstractView {
 
     private static final AbstractController simController = CarPark.getController("SimulatorController");
 
-    public SimulatorView(int floors, int rows, int places) {
+    public ControlsView() {
         super(new BorderLayout());
-        numberOfFloors = floors;
-        numberOfRows = rows;
-        numberOfPlaces = places;
 
         JButton oneStep = new JButton("One Step");
         JButton hundredStep = new JButton("Hundred Steps");
 
         add(oneStep, BorderLayout.NORTH);
         add(hundredStep, BorderLayout.SOUTH);
+//        CarParkView carParkView = new CarParkView();
+//        add(carParkView, BorderLayout.CENTER);
 
         oneStep.addActionListener(simController);
         hundredStep.addActionListener(simController);
 
-        setSize(550, 300);
+        setSize(150, 50);
+
     }
+
 
 
 }
