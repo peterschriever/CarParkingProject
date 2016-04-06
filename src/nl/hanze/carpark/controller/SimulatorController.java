@@ -47,4 +47,10 @@ public class SimulatorController extends AbstractController {
         }
         return null;
     }
+
+    public void tick() {
+        if(simModel instanceof SimulatorModel) {
+            ((SimulatorModel) simModel).tick();
+        }
+    }
 }

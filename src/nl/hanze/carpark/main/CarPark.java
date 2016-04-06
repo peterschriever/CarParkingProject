@@ -19,18 +19,17 @@ import java.util.Map;
  */
 public class CarPark {
 
-    private static HashMap<String, AbstractController> controllers;
-    private static HashMap<String, AbstractModel> models;
-    private static HashMap<String, AbstractView> views;
+    private static HashMap<String, AbstractController> controllers = new HashMap<>();
+    private static HashMap<String, AbstractModel> models = new HashMap<>();
+    private static HashMap<String, AbstractView> views = new HashMap<>();
 
     public CarPark() {
         // important: first models
-        models = new HashMap<>();
         models.put("SimulatorModel", new SimulatorModel(3, 6, 30)); // set the simulator to 3 floors, 6 rows and 30 spaces
 
         // important: second controllers
-        controllers = new HashMap<>();
-        controllers.put("SimulatorController", new SimulatorController());
+        SimulatorController simController = new SimulatorController();
+        controllers.put("SimulatorController", simController);
 
         JFrame screen = new JFrame("CityParking Simulator Tool");
         screen.setSize(850, 600);
@@ -48,32 +47,36 @@ public class CarPark {
         carParkView.setBounds(100, 100, 750, 550);
 
         // important: thirdly views
-        views = new HashMap<>();
         views.put("ControlsView", controlsView);
         views.put("CarParkView", carParkView);
 
         screen.setVisible(true);
 
         updateViews();
+
+        for(int i = 0 ; i < 20 ; i++) {
+            simController.tick();
+        }
     }
 
     public static AbstractController getController(String controller) {
-        return controllers.get(controller);
+        return controllers.get(controller) != null ? controllers.get(controller) : null;
     }
 
     public static AbstractModel getModel(String model) {
-        return models.get(model);
+        return models.get(model) != null ? models.get(model) : null;
     }
 
     public static AbstractView getView(String view) {
-        return views.get(view);
+        return views.get(view) != null ? views.get(view) : null;
     }
 
-    private void updateViews() {
+    public static void updateViews() {
         for (Object o : views.entrySet()) {
             Map.Entry pair = (Map.Entry) o;
             String key = pair.getKey() instanceof String ? (String)pair.getKey():"";
             views.get(key).updateView();
+            System.out.println(key + " updated!");
         }
     }
 }
