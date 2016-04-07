@@ -9,6 +9,7 @@ import nl.hanze.carpark.view.CarParkView;
 import nl.hanze.carpark.view.ControlsView;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -50,6 +51,8 @@ public class CarPark {
         views.put("ControlsView", controlsView);
         views.put("CarParkView", carParkView);
 
+        screen.setPreferredSize(new Dimension(850, 600));
+        screen.pack();
         screen.setVisible(true);
 
         updateViews();

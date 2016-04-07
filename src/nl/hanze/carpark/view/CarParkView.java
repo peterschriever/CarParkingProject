@@ -34,10 +34,12 @@ public class CarParkView extends AbstractView {
 
 //        JButton test = new JButton("test");
 //        add(test);
+
+        setPreferredSize(size);
     }
 
     @Override
-    public void paintComponents(Graphics g) {
+    public void paintComponent(Graphics g) {
         if(carParkImage == null) {
             return;
         }

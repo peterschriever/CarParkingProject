@@ -30,6 +30,8 @@ public class ControlsView extends AbstractView {
 
         setSize(150, 50);
 
+        setPreferredSize(new Dimension(150, 50));
+
     }
 
 
