@@ -8,5 +8,5 @@ PROJECT TITLE: CarParkProject
 PURPOSE OF PROJECT: CarPark simulation project for school
 VERSION or DATE: 2016/03/31
 HOW TO START THIS PROJECT: @TODO: add startup explanation.
-AUTHORS: Pieter Zwart, Gabe Witteveen, Mathieu Steenbergen en Peter Schriever
+AUTHORS: Gabe Witteveen, Mathieu Steenbergen en Peter Schriever
 USER INSTRUCTIONS: @TODO: further fill in readme file.
