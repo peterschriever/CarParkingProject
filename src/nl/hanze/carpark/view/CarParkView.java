@@ -32,10 +32,6 @@ public class CarParkView extends AbstractView {
             numberOfPlaces = ((SimulatorController) simController).getNumberOfPlaces();
         }
 
-//        JButton test = new JButton("test");
-//        add(test);
-
-        setPreferredSize(size);
     }
 
     @Override

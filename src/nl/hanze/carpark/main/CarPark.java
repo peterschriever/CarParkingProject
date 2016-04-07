@@ -6,12 +6,9 @@ import nl.hanze.carpark.model.AbstractModel;
 import nl.hanze.carpark.model.SimulatorModel;
 import nl.hanze.carpark.view.AbstractView;
 import nl.hanze.carpark.view.CarParkView;
-import nl.hanze.carpark.view.ControlsView;
 
 import javax.swing.*;
-import java.awt.*;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -39,20 +36,16 @@ public class CarPark {
         screen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // add the views to the screen
-        ControlsView controlsView = new ControlsView();
         CarParkView carParkView = new CarParkView();
 
-        screen.getContentPane().add(controlsView);
         screen.getContentPane().add(carParkView);
+        screen.getContentPane().add(simController);
 
         carParkView.setBounds(100, 100, 750, 550);
 
         // important: thirdly views
-        views.put("ControlsView", controlsView);
         views.put("CarParkView", carParkView);
 
-        screen.setPreferredSize(new Dimension(850, 600));
-        screen.pack();
         screen.setVisible(true);
 
         updateViews();
