@@ -46,7 +46,8 @@ public class CarPark {
         screen.getContentPane().add(carParkView);
         screen.getContentPane().add(simController);
 
-        carParkView.setBounds(100, 100, 750, 550);
+        carParkView.setBounds(180, 20, carParkView.getWidth(), carParkView.getHeight());
+        simController.setBounds(20, 20, simController.getWidth(), simController.getHeight());
 
         // important: thirdly views
         views.put("CarParkView", carParkView);

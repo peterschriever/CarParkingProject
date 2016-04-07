@@ -35,7 +35,6 @@ public class SimulatorController extends AbstractController {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println(e.getSource());
         if (e.getSource() instanceof JButton && simModel instanceof SimulatorModel) {
             JButton jb = (JButton) e.getSource();
             if (jb == oneStep) {

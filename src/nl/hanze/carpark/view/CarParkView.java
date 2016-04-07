@@ -24,7 +24,8 @@ public class CarParkView extends AbstractView {
     private int numberOfPlaces = 0;
 
     public CarParkView() {
-        size = new Dimension(750, 550);
+        size = new Dimension(680, 360);
+        setSize(size);
 
         if(simController instanceof SimulatorController) {
             numberOfFloors = ((SimulatorController) simController).getNumberOfFloors();
