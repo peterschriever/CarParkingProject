@@ -27,6 +27,10 @@ public class CarPark {
     private static final int width = 1200;
     private static final int height = 900;
 
+    private boolean run;
+
+    public static int simulationSpeed = 1000;
+
     public CarPark() {
         // important: first models
         models.put("SimulatorModel", new SimulatorModel(3, 6, 30)); // set the simulator to 3 floors, 6 rows and 30 spaces
@@ -51,7 +55,7 @@ public class CarPark {
         screen.getContentPane().add(simController);
 
         carParkView.setBounds(180, 20, carParkView.getWidth(), carParkView.getHeight());
-        queueView.setBounds(190+carParkView.getWidth(), 20, queueView.getWidth(), queueView.getHeight());
+        queueView.setBounds(190 + carParkView.getWidth(), 20, queueView.getWidth(), queueView.getHeight());
         simController.setBounds(20, 20, simController.getWidth(), simController.getHeight());
 
         // important: thirdly views
@@ -70,8 +74,15 @@ public class CarPark {
 
         updateViews();
 
-        for (int i = 0; i < 200000; i++) {
+        run = true;
+        while (run) {
             simController.tick();
+            try {
+                Thread.sleep(simulationSpeed);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+                run = false;
+            }
         }
     }
 

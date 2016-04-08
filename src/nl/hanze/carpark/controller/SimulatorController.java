@@ -7,7 +7,6 @@ import nl.hanze.carpark.model.Location;
 import nl.hanze.carpark.model.SimulatorModel;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 
 /**
@@ -18,18 +17,42 @@ public class SimulatorController extends AbstractController {
     private static final AbstractModel simModel = CarPark.getModel("SimulatorModel");
     private JButton oneStep;
     private JButton hundredStep;
+    private JButton applySimulatorSpeed;
+    private JTextField simulatorSpeed;
+    private JLabel simulatorSpeedLabel;
+
+    private static final int width = 150;
+    private static final int height = 120;
+
 
     public SimulatorController() {
         oneStep = new JButton("One Step");
         hundredStep = new JButton("Hundred Steps");
+        applySimulatorSpeed = new JButton("Apply");
+        simulatorSpeed = new JTextField("" + CarPark.simulationSpeed);
 
-        add(oneStep, BorderLayout.NORTH);
-        add(hundredStep, BorderLayout.SOUTH);
+        setLayout(null);
 
+        oneStep.setBounds(0, 0, width, 20);
         oneStep.addActionListener(this);
-        hundredStep.addActionListener(this);
+        add(oneStep);
 
-        setSize(150, 100);
+        hundredStep.setBounds(0, 22, width, 20);
+        hundredStep.addActionListener(this);
+        add(hundredStep);
+
+        simulatorSpeedLabel = new JLabel("Change Tick Speed:");
+        simulatorSpeedLabel.setBounds(0, 50, width, 20);
+        add(simulatorSpeedLabel);
+
+        simulatorSpeed.setBounds((width/2)-(width/3), 70, (width/3)*2, 20);
+        add(simulatorSpeed);
+
+        applySimulatorSpeed.setBounds(0, 92, width, 20);
+        applySimulatorSpeed.addActionListener(this);
+        add(applySimulatorSpeed);
+
+        setSize(width, height);
 
     }
 
@@ -41,8 +64,11 @@ public class SimulatorController extends AbstractController {
                 ((SimulatorModel) simModel).tick();
             } else if (jb == hundredStep) {
                 for (int i = 0; i <= 100; i++) {
+                    // @TODO: apply threading
                     ((SimulatorModel) simModel).tick();
                 }
+            } else if (jb == applySimulatorSpeed) {
+                CarPark.simulationSpeed = Integer.parseInt(simulatorSpeed.getText());
             }
         }
     }
