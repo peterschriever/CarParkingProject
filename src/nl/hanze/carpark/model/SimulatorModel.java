@@ -25,14 +25,14 @@ public class SimulatorModel extends AbstractModel implements Runnable {
     private int minute = 0;
 
     // Number of arriving cars per hour.
-    int weekDayArrivals = 50; // average number of arriving cars per hour
+    int weekDayArrivals = 500; // average number of arriving cars per hour
     int weekendArrivals = 90; // average number of arriving cars per hour
 
     // Intervals for entering, paying and exiting cars.
     int enterSpeed = 3; // number of cars that can enter per minute
     int paymentSpeed = 10; // number of cars that can pay per minute
     int exitSpeed = 9; // number of cars that can leave per minute
-    int specialCarProbability = 4; // this means one in five cars will be a pass holder (0 counts)
+    int specialCarProbability = 4; // this means one in five cars will be either a Pass holder or a Reservation (0 counts)
 
     private Car[][][] cars;
 
@@ -124,8 +124,10 @@ public class SimulatorModel extends AbstractModel implements Runnable {
                 Car car = new ParkingPassCar();
                 this.entranceCarQueue.addCar(car);
             } else if(customerChance == 1) {
-                Car car = new Reservation();
-                this.entranceCarQueue.addCar(car);
+                if(getFirstFreeReservatedLocation() != null) {
+                    Car car = new Reservation();
+                    this.entranceCarQueue.addCar(car);
+                }
             } else {
                 Car car = new AdHocCar();
                 this.entranceCarQueue.addCar(car);
@@ -151,6 +153,8 @@ public class SimulatorModel extends AbstractModel implements Runnable {
                     parkCar(freeReservatedLocation, car);
                     int stayMinutes = (int) (15 + random.nextFloat() * 10 * 60);
                     car.setMinutesLeft(stayMinutes);
+                } else {
+                    exitCarQueue.addCar(car);
                 }
             } else {
                 Location freeLocation = this.getFirstFreeLocation();
@@ -158,6 +162,8 @@ public class SimulatorModel extends AbstractModel implements Runnable {
                     parkCar(freeLocation, car);
                     int stayMinutes = (int) (15 + random.nextFloat() * 10 * 60);
                     car.setMinutesLeft(stayMinutes);
+                } else {
+                    exitCarQueue.addCar(car);
                 }
 
                 CarPark.updateViews();
@@ -297,7 +303,7 @@ public class SimulatorModel extends AbstractModel implements Runnable {
      * @return null | Location object when free place is found, otherwise null
      */
     public Location getFirstFreeLocation() {
-        for (int floor = 0; floor < this.getNumberOfFloors(); floor++) {
+        for (int floor = 0; floor < this.getNumberOfFloors() - 1; floor++) {
             for (int row = 0; row < this.getNumberOfRows(); row++) {
                 for (int place = 0; place < this.getNumberOfPlaces(); place++) {
                     Location location = new Location(floor, row, place);

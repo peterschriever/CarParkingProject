@@ -60,7 +60,7 @@ public class CarParkView extends AbstractView {
                     Color color;
                     if (car == null) {
                         if(floor == 2) {
-                            color = Color.ORANGE;
+                            color = Color.BLACK;
                         } else {
                             color = Color.WHITE;
                         }
@@ -69,7 +69,7 @@ public class CarParkView extends AbstractView {
                     } else if(car instanceof ParkingPassCar) {
                         color = Color.BLUE;
                     } else {
-                        color = Color.MAGENTA;
+                        color = Color.YELLOW;
                     }
 
                     drawPlace(graphics, location, color);
