@@ -1,7 +1,6 @@
 package nl.hanze.carpark.model;
 
 import nl.hanze.carpark.controller.AbstractController;
-import nl.hanze.carpark.controller.SimulatorController;
 import nl.hanze.carpark.main.CarPark;
 
 import java.util.Random;
@@ -49,6 +48,18 @@ public class SimulatorModel extends AbstractModel {
         exitCarQueue = new CarQueue();
 
         cars = new Car[numberOfFloors][numberOfRows][numberOfPlaces];
+    }
+
+    public int getCarsAtEntranceQueue() {
+        return entranceCarQueue.size();
+    }
+
+    public int getCarsAtPaymentQueue() {
+        return paymentCarQueue.size();
+    }
+
+    public int getCarsAtExitQueue() {
+        return exitCarQueue.size();
     }
 
     public Car getCarAt(Location loc) {

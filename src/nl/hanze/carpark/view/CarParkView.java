@@ -17,7 +17,7 @@ import java.awt.*;
 public class CarParkView extends AbstractView {
     private Dimension size;
     private Image carParkImage;
-    private final AbstractController simController = CarPark.getController("SimulatorController");
+    private static final AbstractController simController = CarPark.getController("SimulatorController");
 
     private int numberOfFloors = 0;
     private int numberOfRows = 0;

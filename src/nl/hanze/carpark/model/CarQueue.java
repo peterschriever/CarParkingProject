@@ -14,4 +14,8 @@ public class CarQueue {
         return queue.poll();
     }
 
+    public int size() {
+        return queue.size();
+    }
+
 }

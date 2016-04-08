@@ -47,6 +47,27 @@ public class SimulatorController extends AbstractController {
         }
     }
 
+    public int getCarsAtEntranceQueue() {
+        if (simModel instanceof SimulatorModel) {
+            return ((SimulatorModel) simModel).getCarsAtEntranceQueue();
+        }
+        return 0;
+    }
+
+    public int getCarsAtPaymentQueue() {
+        if (simModel instanceof SimulatorModel) {
+            return ((SimulatorModel) simModel).getCarsAtPaymentQueue();
+        }
+        return 0;
+    }
+
+    public int getCarsAtExitQueue() {
+        if (simModel instanceof SimulatorModel) {
+            return ((SimulatorModel) simModel).getCarsAtExitQueue();
+        }
+        return 0;
+    }
+
     public int getNumberOfFloors() {
         if (simModel instanceof SimulatorModel) {
             return ((SimulatorModel) simModel).getNumberOfFloors();

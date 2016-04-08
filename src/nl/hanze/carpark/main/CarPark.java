@@ -7,10 +7,12 @@ import nl.hanze.carpark.model.SimulatorModel;
 import nl.hanze.carpark.view.AbstractView;
 import nl.hanze.carpark.view.CarParkView;
 import nl.hanze.carpark.view.GridView;
+import nl.hanze.carpark.view.QueueView;
 
 import javax.swing.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Queue;
 
 /**
  * Created by peterzen on 4/5/16.
@@ -42,16 +44,20 @@ public class CarPark {
         // add the views to the screen
         CarParkView carParkView = new CarParkView();
         GridView gridView = new GridView();
+        QueueView queueView = new QueueView();
 
         screen.getContentPane().add(carParkView);
+        screen.getContentPane().add(queueView);
         screen.getContentPane().add(simController);
 
         carParkView.setBounds(180, 20, carParkView.getWidth(), carParkView.getHeight());
+        queueView.setBounds(190+carParkView.getWidth(), 20, queueView.getWidth(), queueView.getHeight());
         simController.setBounds(20, 20, simController.getWidth(), simController.getHeight());
 
         // important: thirdly views
         views.put("CarParkView", carParkView);
         views.put("GridView", gridView);
+        views.put("QueueView", queueView);
 
         screen.setVisible(true);
 
@@ -64,7 +70,7 @@ public class CarPark {
 
         updateViews();
 
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 200000; i++) {
             simController.tick();
         }
     }
