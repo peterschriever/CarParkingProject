@@ -25,7 +25,7 @@ public class SimulatorModel extends AbstractModel implements Runnable {
     private int minute = 0;
 
     // Number of arriving cars per hour.
-    int weekDayArrivals = 500; // average number of arriving cars per hour
+    int weekDayArrivals = 50; // average number of arriving cars per hour
     int weekendArrivals = 90; // average number of arriving cars per hour
 
     // Intervals for entering, paying and exiting cars.
@@ -147,27 +147,21 @@ public class SimulatorModel extends AbstractModel implements Runnable {
                 break;
             }
             // Find a space for this car.
+            Location freeLoc;
             if (car instanceof Reservation) {
-                Location freeReservatedLocation = this.getFirstFreeReservatedLocation();
-                if (freeReservatedLocation != null) {
-                    parkCar(freeReservatedLocation, car);
-                    int stayMinutes = (int) (15 + random.nextFloat() * 10 * 60);
-                    car.setMinutesLeft(stayMinutes);
-                } else {
-                    exitCarQueue.addCar(car);
-                }
+                freeLoc = this.getFirstFreeReservatedLocation();
             } else {
-                Location freeLocation = this.getFirstFreeLocation();
-                if (freeLocation != null) {
-                    parkCar(freeLocation, car);
-                    int stayMinutes = (int) (15 + random.nextFloat() * 10 * 60);
-                    car.setMinutesLeft(stayMinutes);
-                } else {
-                    exitCarQueue.addCar(car);
-                }
-
-                CarPark.updateViews();
+                freeLoc = this.getFirstFreeLocation();
             }
+
+            if (freeLoc != null) {
+                parkCar(freeLoc, car);
+                int stayMinutes = (int) (15 + random.nextFloat() * 10 * 60);
+                car.setMinutesLeft(stayMinutes);
+            } else {
+                exitCarQueue.addCar(car);
+            }
+            CarPark.updateViews();
         }
     }
 
