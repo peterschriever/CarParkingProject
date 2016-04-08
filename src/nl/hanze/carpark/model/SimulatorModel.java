@@ -34,7 +34,7 @@ public class SimulatorModel extends AbstractModel {
     int enterSpeed = 3; // number of cars that can enter per minute
     int paymentSpeed = 10; // number of cars that can pay per minute
     int exitSpeed = 9; // number of cars that can leave per minute
-    int passHolderProbability = 4; // this means one in five cars will be a pass holder (0 counts)
+    int specialCarProbability = 4; // this means one in five cars will be a pass holder (0 counts)
 
     private Car[][][] cars;
 
@@ -120,10 +120,13 @@ public class SimulatorModel extends AbstractModel {
     private void fillEntranceQueueForTick(int carsPerMinute, Random random) {
         // Add the cars to the back of the queue.
         for (int i = 0; i < carsPerMinute; i++) {
-            int customerChance = random.nextInt(passHolderProbability);
+            int customerChance = random.nextInt(specialCarProbability);
 
             if (customerChance == 0) {
                 Car car = new ParkingPassCar();
+                this.entranceCarQueue.addCar(car);
+            } else if(customerChance == 1) {
+                Car car = new Reservation();
                 this.entranceCarQueue.addCar(car);
             } else {
                 Car car = new AdHocCar();
@@ -144,14 +147,23 @@ public class SimulatorModel extends AbstractModel {
                 break;
             }
             // Find a space for this car.
-            Location freeLocation = this.getFirstFreeLocation();
-            if (freeLocation != null) {
-                parkCar(freeLocation, car);
-                int stayMinutes = (int) (15 + random.nextFloat() * 10 * 60);
-                car.setMinutesLeft(stayMinutes);
-            }
+            if (car instanceof Reservation) {
+                Location freeReservatedLocation = this.getFirstFreeReservatedLocation();
+                if (freeReservatedLocation != null) {
+                    parkCar(freeReservatedLocation, car);
+                    int stayMinutes = (int) (15 + random.nextFloat() * 10 * 60);
+                    car.setMinutesLeft(stayMinutes);
+                }
+            } else {
+                Location freeLocation = this.getFirstFreeLocation();
+                if (freeLocation != null) {
+                    parkCar(freeLocation, car);
+                    int stayMinutes = (int) (15 + random.nextFloat() * 10 * 60);
+                    car.setMinutesLeft(stayMinutes);
+                }
 
-            CarPark.updateViews();
+                CarPark.updateViews();
+            }
         }
     }
 
@@ -227,6 +239,9 @@ public class SimulatorModel extends AbstractModel {
             if(car instanceof ParkingPassCar){
                 removeCarAt(car.getLocation());
                 exitCarQueue.addCar(car);
+            } else if(car instanceof Reservation) {
+                removeCarAt(car.getLocation());
+                exitCarQueue.addCar(car);
             } else {
                 car.setIsPaying(true);
                 paymentCarQueue.addCar(car);
@@ -298,6 +313,19 @@ public class SimulatorModel extends AbstractModel {
                     if (getCarAt(location) == null) {
                         return location;
                     }
+                }
+            }
+        }
+        return null;
+    }
+
+    public Location getFirstFreeReservatedLocation() {
+        for (int floor = 2; floor < this.getNumberOfFloors(); floor++) {
+            for (int row = 0; row < this.getNumberOfRows(); row++) {
+                for (int place = 0; place < this.getNumberOfPlaces(); place++) {
+                    Location location = new Location(floor, row, place);
+                    if (getCarAt(location) == null)
+                        return location;
                 }
             }
         }
