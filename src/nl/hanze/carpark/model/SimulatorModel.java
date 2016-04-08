@@ -9,7 +9,7 @@ import java.util.Random;
  * Created by peterzen on 4/6/16.
  * Part of the CarParkingProject project.
  */
-public class SimulatorModel extends AbstractModel {
+public class SimulatorModel extends AbstractModel implements Runnable {
     private static final AbstractController simController = CarPark.getController("SimulatorController");
 
     private int numberOfFloors;
@@ -23,8 +23,6 @@ public class SimulatorModel extends AbstractModel {
     private int day = 0;
     private int hour = 0;
     private int minute = 0;
-
-    private int tickPause = 100;
 
     // Number of arriving cars per hour.
     int weekDayArrivals = 50; // average number of arriving cars per hour
@@ -280,13 +278,6 @@ public class SimulatorModel extends AbstractModel {
         fillExitQueue();
         getCarPayments();
         cleanupExitQueue();
-
-        // Pause.
-        try {
-            Thread.sleep(tickPause);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 
     private void cleanupExitQueue() {
@@ -349,5 +340,12 @@ public class SimulatorModel extends AbstractModel {
         int row = loc.getRow();
         int place = loc.getPlace();
         return !(floor < 0 || floor >= numberOfFloors || row < 0 || row > numberOfRows || place < 0 || place > numberOfPlaces);
+    }
+
+    @Override
+    public void run() {
+        // run ticks in a new Thread
+
+
     }
 }

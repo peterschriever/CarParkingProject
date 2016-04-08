@@ -13,7 +13,7 @@ import java.awt.event.ActionEvent;
  * Created by peterzen on 4/6/16.
  * Part of the CarParkingProject project.
  */
-public class SimulatorController extends AbstractController {
+public class SimulatorController extends AbstractController implements Runnable {
     private static final AbstractModel simModel = CarPark.getModel("SimulatorModel");
     private JButton oneStep;
     private JButton hundredStep;
@@ -45,7 +45,7 @@ public class SimulatorController extends AbstractController {
         simulatorSpeedLabel.setBounds(0, 50, width, 20);
         add(simulatorSpeedLabel);
 
-        simulatorSpeed.setBounds((width/2)-(width/3), 70, (width/3)*2, 20);
+        simulatorSpeed.setBounds((width / 2) - (width / 3), 70, (width / 3) * 2, 20);
         add(simulatorSpeed);
 
         applySimulatorSpeed.setBounds(0, 92, width, 20);
@@ -61,12 +61,10 @@ public class SimulatorController extends AbstractController {
         if (e.getSource() instanceof JButton && simModel instanceof SimulatorModel) {
             JButton jb = (JButton) e.getSource();
             if (jb == oneStep) {
-                ((SimulatorModel) simModel).tick();
+                tick();
             } else if (jb == hundredStep) {
-                for (int i = 0; i <= 100; i++) {
-                    // @TODO: apply threading
-                    ((SimulatorModel) simModel).tick();
-                }
+                Runnable r = new TickThread(100);
+                new Thread(r).start();
             } else if (jb == applySimulatorSpeed) {
                 CarPark.simulationSpeed = Integer.parseInt(simulatorSpeed.getText());
             }
@@ -125,6 +123,34 @@ public class SimulatorController extends AbstractController {
     public void tick() {
         if (simModel instanceof SimulatorModel) {
             ((SimulatorModel) simModel).tick();
+        }
+    }
+
+    @Override
+    public void run() {
+        System.out.println("new Thread in SimulatorController made.");
+        if (simModel instanceof SimulatorModel) {
+            for (int i = 0; i <= 100; i++) {
+                ((SimulatorModel) simModel).tick();
+            }
+        }
+    }
+
+    private class TickThread implements Runnable {
+        private int steps;
+
+        public TickThread(int stepsIn) {
+            steps = stepsIn;
+            System.out.println("TickThread constructor invoked.");
+
+        }
+
+        @Override
+        public void run() {
+            System.out.println("TickThread run invoked.");
+            for (int i = 0 ; i <= steps ; i++) {
+                tick();
+            }
         }
     }
 }
