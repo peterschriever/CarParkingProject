@@ -43,6 +43,7 @@ public class QueueView extends AbstractView {
         if (!(simController instanceof SimulatorController)) {
             return;
         }
+        
         atEntrance = ((SimulatorController) simController).getCarsAtEntranceQueue();
         atPayment = ((SimulatorController) simController).getCarsAtPaymentQueue();
         atExit = ((SimulatorController) simController).getCarsAtExitQueue();

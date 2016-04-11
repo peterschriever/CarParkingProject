@@ -147,10 +147,12 @@ public class SimulatorController extends AbstractController implements Runnable 
 
         @Override
         public void run() {
+            hundredStep.setEnabled(false);
             System.out.println("TickThread run invoked.");
             for (int i = 0 ; i <= steps ; i++) {
                 tick();
             }
+            hundredStep.setEnabled(true);
         }
     }
 }
