@@ -10,10 +10,14 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 
 /**
- * Created by peterzen on 4/6/16.
+ * @author peter
  * Part of the CarParkingProject project.
+ * Class to communicate between views and models.
+ *  set size of the total frame.
+ * @see nl.hanze.carpark.controller.AbstractController
+ *
  */
-public class SimulatorController extends AbstractController implements Runnable {
+public class SimulatorController extends AbstractController {
     private static final AbstractModel simModel = CarPark.getModel("SimulatorModel");
     private JButton oneStep;
     private JButton hundredStep;
@@ -25,6 +29,11 @@ public class SimulatorController extends AbstractController implements Runnable 
     private static final int height = 120;
 
 
+    /**
+     * Constructor of the SimulatorController class.
+     * Creates the buttons in the simulation.
+     * Sets the sizes of the buttons, and adds them to the SimulatorController Jpanel.
+     */
     public SimulatorController() {
         oneStep = new JButton("One Step");
         hundredStep = new JButton("Hundred Steps");
@@ -56,6 +65,12 @@ public class SimulatorController extends AbstractController implements Runnable 
 
     }
 
+    /**
+     * @param e actionevent triggered by button.
+     * check if e is a instanceof Jbutton, if so get the source. Check if its a button, if oneStep do a tick.
+     *          if hundredStep make a new TickThread with a value of 100.
+     *          if its applySimulatorSpeed, change the simulatorspeed, by the value given.
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() instanceof JButton) {
@@ -71,6 +86,10 @@ public class SimulatorController extends AbstractController implements Runnable 
         }
     }
 
+    /**
+     * Get the cars at the entrance queue.
+     * @return The number of cars, if simModel is a instanceof SimulatorModel otherwise return 0.
+     */
     public int getCarsAtEntranceQueue() {
         if (simModel instanceof SimulatorModel) {
             return ((SimulatorModel) simModel).getCarsAtEntranceQueue();
@@ -78,6 +97,10 @@ public class SimulatorController extends AbstractController implements Runnable 
         return 0;
     }
 
+    /**
+     * Get the cars at the payment queue.
+     * @return The number of cars, if simModel is a instanceof SimulatorModel otherwise return 0.
+     */
     public int getCarsAtPaymentQueue() {
         if (simModel instanceof SimulatorModel) {
             return ((SimulatorModel) simModel).getCarsAtPaymentQueue();
@@ -85,6 +108,11 @@ public class SimulatorController extends AbstractController implements Runnable 
         return 0;
     }
 
+
+    /**
+     * Get the cars at the exit queue.
+     * @return the number of cars, if simModel is a instanceof SimulatorModel otherwise return 0.
+     */
     public int getCarsAtExitQueue() {
         if (simModel instanceof SimulatorModel) {
             return ((SimulatorModel) simModel).getCarsAtExitQueue();
@@ -92,6 +120,10 @@ public class SimulatorController extends AbstractController implements Runnable 
         return 0;
     }
 
+    /**
+     * get the number of floors in the parking garage simulation.
+     * @return the number of floors, if simModel is a instanceof SimulatorModel otherwise return 0.
+     */
     public int getNumberOfFloors() {
         if (simModel instanceof SimulatorModel) {
             return ((SimulatorModel) simModel).getNumberOfFloors();
@@ -99,6 +131,11 @@ public class SimulatorController extends AbstractController implements Runnable 
         return 0;
     }
 
+    /**
+     *
+     * get the number of rows in the parking garage simulation.
+     * @return the number of rows, if simModel is a instanceof SimulatorModel otherwise return 0.
+     */
     public int getNumberOfRows() {
         if (simModel instanceof SimulatorModel) {
             return ((SimulatorModel) simModel).getNumberOfRows();
@@ -106,6 +143,10 @@ public class SimulatorController extends AbstractController implements Runnable 
         return 0;
     }
 
+    /**
+     * get the number of places per row in the parking garage simulation.
+     * @return the number of places, if simModel is a instanceof SimulatorModel otherwise return 0.
+     */
     public int getNumberOfPlaces() {
         if (simModel instanceof SimulatorModel) {
             return ((SimulatorModel) simModel).getNumberOfPlaces();
@@ -113,6 +154,11 @@ public class SimulatorController extends AbstractController implements Runnable 
         return 0;
     }
 
+    /**
+     *  get the location of an car.
+     * @param loc location of the car.
+     * @return return the location of an car, if simModel is a instanceof SimulatorModel otherwise return null.
+     */
     public Car getCarAt(Location loc) {
         if (simModel instanceof SimulatorModel) {
             return ((SimulatorModel) simModel).getCarAt(loc);
@@ -120,30 +166,38 @@ public class SimulatorController extends AbstractController implements Runnable 
         return null;
     }
 
+    /**
+     * execute the tick method if simModel is a instanceof SimulatorModel.
+     */
     public void tick() {
         if (simModel instanceof SimulatorModel) {
             ((SimulatorModel) simModel).tick();
         }
     }
-
-    @Override
-    public void run() {
-        System.out.println("new Thread in SimulatorController made.");
-        if (simModel instanceof SimulatorModel) {
-            for (int i = 0; i <= 100; i++) {
-                ((SimulatorModel) simModel).tick();
-            }
-        }
-    }
-
+    /**
+     * @author peter
+     *  class TickThread implements class Runnable, so the instances of this class can be executed by a thread.
+     */
     private class TickThread implements Runnable {
         private int steps;
 
+
+        /**
+         * @param  stepsIn the amount of int steps for variable steps
+         * print out "TickThread constructor invoked."
+         */
         public TickThread(int stepsIn) {
             steps = stepsIn;
             System.out.println("TickThread constructor invoked.");
         }
 
+
+        /**
+         * disable jbutton hundredStep
+         * Print out "TickThread run invoked."
+         * for int i lower than or same value as steps execute an tick.
+         * enable jbutton hundredStep
+         */
         @Override
         public void run() {
             hundredStep.setEnabled(false);
