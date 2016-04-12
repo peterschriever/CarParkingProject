@@ -4,10 +4,7 @@ import nl.hanze.carpark.controller.AbstractController;
 import nl.hanze.carpark.controller.SimulatorController;
 import nl.hanze.carpark.model.AbstractModel;
 import nl.hanze.carpark.model.SimulatorModel;
-import nl.hanze.carpark.view.AbstractView;
-import nl.hanze.carpark.view.CarParkView;
-import nl.hanze.carpark.view.GridView;
-import nl.hanze.carpark.view.QueueView;
+import nl.hanze.carpark.view.*;
 
 import javax.swing.*;
 import java.util.HashMap;
@@ -49,17 +46,21 @@ public class CarPark {
         CarParkView carParkView = new CarParkView();
         GridView gridView = new GridView();
         QueueView queueView = new QueueView();
+        StatisticsView statisticsView = new StatisticsView();
 
         screen.getContentPane().add(carParkView);
         screen.getContentPane().add(queueView);
         screen.getContentPane().add(simController);
+        screen.getContentPane().add(statisticsView);
 
         carParkView.setBounds(180, 20, carParkView.getWidth(), carParkView.getHeight());
+        statisticsView.setBounds(20, 200, statisticsView.getWidth(), statisticsView.getHeight());
         queueView.setBounds(190 + carParkView.getWidth(), 20, queueView.getWidth(), queueView.getHeight());
         simController.setBounds(20, 20, simController.getWidth(), simController.getHeight());
 
         // important: thirdly views
         views.put("CarParkView", carParkView);
+        views.put("StatisticsView", statisticsView);
         views.put("GridView", gridView);
         views.put("QueueView", queueView);
 

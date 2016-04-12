@@ -20,6 +20,9 @@ public class SimulatorModel extends AbstractModel implements Runnable {
     private CarQueue paymentCarQueue;
     private CarQueue exitCarQueue;
 
+    private int carPayPerTick = 0;
+    private double revenuePerTick = 0.0;
+
     private int day = 0;
     private int hour = 0;
     private int minute = 0;
@@ -29,6 +32,7 @@ public class SimulatorModel extends AbstractModel implements Runnable {
     int weekendArrivals = 150; // average number of arriving cars per hour
 
     // Intervals for entering, paying and exiting cars.
+    private double ticketPrice = 5.25 ;
     int enterSpeed = 3; // number of cars that can enter per minute
     int paymentSpeed = 10; // number of cars that can pay per minute
     int exitSpeed = 9; // number of cars that can leave per minute
@@ -257,6 +261,7 @@ public class SimulatorModel extends AbstractModel implements Runnable {
     private void getCarPayments() {
         // Let cars pay.
         for (int i = 0; i < paymentSpeed; i++) {
+            carPayPerTick++;
             Car car = paymentCarQueue.removeCar();
             CarPark.updateViews();
 
@@ -275,6 +280,7 @@ public class SimulatorModel extends AbstractModel implements Runnable {
 
     public void tick() {
         advanceTime();
+        revenuePerTick = 0;
         Random random = new Random();
         int carsArrivingHourlyAverage = getCarsArrivingHourlyAverage();
         int carsArrivingPerMinute = getCarsArrivingPerMinute(carsArrivingHourlyAverage, random);
@@ -283,7 +289,17 @@ public class SimulatorModel extends AbstractModel implements Runnable {
         tickCars();
         fillExitQueue();
         getCarPayments();
+        calculateRevenue();
+        resetCarsPaying();
         cleanupExitQueue();
+    }
+
+    private void resetCarsPaying() {
+        carPayPerTick = 0;
+    }
+
+    private void calculateRevenue() {
+        revenuePerTick = carPayPerTick * ticketPrice;
     }
 
     private void cleanupExitQueue() {
@@ -353,5 +369,13 @@ public class SimulatorModel extends AbstractModel implements Runnable {
         // run ticks in a new Thread
 
 
+    }
+
+    public double getTicketPrice() {
+        return ticketPrice;
+    }
+
+    public double getRevenuePerTick() {
+        return revenuePerTick;
     }
 }
