@@ -8,7 +8,6 @@ import nl.hanze.carpark.model.Car;
 import nl.hanze.carpark.model.Location;
 import nl.hanze.carpark.model.ParkingPassCar;
 
-import javax.swing.*;
 import java.awt.*;
 
 /**

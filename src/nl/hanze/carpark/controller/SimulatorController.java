@@ -58,7 +58,7 @@ public class SimulatorController extends AbstractController implements Runnable 
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() instanceof JButton && simModel instanceof SimulatorModel) {
+        if (e.getSource() instanceof JButton) {
             JButton jb = (JButton) e.getSource();
             if (jb == oneStep) {
                 tick();
@@ -142,7 +142,6 @@ public class SimulatorController extends AbstractController implements Runnable 
         public TickThread(int stepsIn) {
             steps = stepsIn;
             System.out.println("TickThread constructor invoked.");
-
         }
 
         @Override

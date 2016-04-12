@@ -6,9 +6,5 @@ package nl.hanze.carpark.model;
  */
 public abstract class AbstractModel {
 
-    public AbstractModel() {
-
-    }
-
 
 }

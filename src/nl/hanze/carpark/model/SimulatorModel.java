@@ -26,13 +26,15 @@ public class SimulatorModel extends AbstractModel implements Runnable {
 
     // Number of arriving cars per hour.
     int weekDayArrivals = 50; // average number of arriving cars per hour
-    int weekendArrivals = 90; // average number of arriving cars per hour
+    int weekendArrivals = 150; // average number of arriving cars per hour
 
     // Intervals for entering, paying and exiting cars.
     int enterSpeed = 3; // number of cars that can enter per minute
     int paymentSpeed = 10; // number of cars that can pay per minute
     int exitSpeed = 9; // number of cars that can leave per minute
     int specialCarProbability = 4; // this means one in five cars will be either a Pass holder or a Reservation (0 counts)
+
+    int carWaitingPatience = 10; // how long a car waits at the entrance when its full
 
     private Car[][][] cars;
 
@@ -52,6 +54,10 @@ public class SimulatorModel extends AbstractModel implements Runnable {
         return entranceCarQueue.size();
     }
 
+    /**
+     * This is the getter for the paymentCarQueue size
+     * @return int returns the size of paymantCarQueue
+     */
     public int getCarsAtPaymentQueue() {
         return paymentCarQueue.size();
     }
@@ -100,7 +106,7 @@ public class SimulatorModel extends AbstractModel implements Runnable {
         // Calculate the number of cars that arrive this minute.
         return day < 5 ? weekDayArrivals : weekendArrivals;
     }
-
+    
     private int getCarsArrivingPerMinute(int hourlyAverage, Random random) {
         // Calculate the number of cars that arrive this minute.
         double standardDeviation = hourlyAverage * 0.1;
