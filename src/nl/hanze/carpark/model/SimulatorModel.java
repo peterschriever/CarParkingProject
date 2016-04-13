@@ -1,16 +1,17 @@
 package nl.hanze.carpark.model;
 
-import nl.hanze.carpark.controller.AbstractController;
 import nl.hanze.carpark.main.CarPark;
 
 import java.util.Random;
 
+
 /**
- * Created by peterzen on 4/6/16.
- * Part of the CarParkingProject project.
+ * The SimulatorModel class is the main Model class of the CarPark simulator
+ *
+ * This class contains almost all the logic for the simulator and links
+ * with the CarPark main class to call view updates when new data is calculated.
  */
-public class SimulatorModel extends AbstractModel implements Runnable {
-    private static final AbstractController simController = CarPark.getController("SimulatorController");
+public class SimulatorModel extends AbstractModel{
 
     private int numberOfFloors;
     private int numberOfRows;
@@ -38,6 +39,15 @@ public class SimulatorModel extends AbstractModel implements Runnable {
 
     private Car[][][] cars;
 
+    /**
+     * The default constructor of the SimulatorModel. This constructor takes
+     * the amount of floors, rows and parking places that should be in the new
+     * simulation.
+     *
+     * @param floors the amount of floors for the car park
+     * @param rows  the amount of rows per floor
+     * @param places the amount of parking places per row
+     */
     public SimulatorModel(int floors, int rows, int places) {
         numberOfFloors = floors;
         numberOfPlaces = places;
@@ -50,6 +60,11 @@ public class SimulatorModel extends AbstractModel implements Runnable {
         cars = new Car[numberOfFloors][numberOfRows][numberOfPlaces];
     }
 
+    /**
+     * Getter for the size of the entranceQueue.
+     *
+     * @return retrieves the amount of cars in the entranceQueue
+     */
     public int getCarsAtEntranceQueue() {
         return entranceCarQueue.size();
     }
@@ -62,10 +77,19 @@ public class SimulatorModel extends AbstractModel implements Runnable {
         return paymentCarQueue.size();
     }
 
+    /**
+     * This is the getter for the exitCarQueue size
+     * @return int returns the size of exitCarQueue
+     */
     public int getCarsAtExitQueue() {
         return exitCarQueue.size();
     }
 
+    /**
+     * Retrieves the Car object at a specific location if there is one.
+     * @param loc the location to look at for a car
+     * @return either an instance of Car when one is found or null if not.
+     */
     public Car getCarAt(Location loc) {
         if (locationIsValid(loc)) {
             return cars[loc.getFloor()][loc.getRow()][loc.getPlace()];
@@ -73,6 +97,12 @@ public class SimulatorModel extends AbstractModel implements Runnable {
         return null;
     }
 
+    /**
+     * Set a specific location with a specific car
+     * @param loc location corresponding to a location in the car park
+     * @param car car you wish to park in the location
+     * @return true when the car was parked. false if not.
+     */
     public boolean parkCar(Location loc, Car car) {
         if (!locationIsValid(loc)) {
             return false;
@@ -86,6 +116,9 @@ public class SimulatorModel extends AbstractModel implements Runnable {
         return false;
     }
 
+    /**
+     * Advance the time in the simulation by one minute.
+     */
     private void advanceTime() {
         // Advance the time by one minute.
         minute++;
@@ -102,11 +135,21 @@ public class SimulatorModel extends AbstractModel implements Runnable {
         }
     }
 
+    /**
+     * Retrieves the amount of cars that arrive hourly.
+     * @return the amount of cars that arrive hourly in either the weekend or weekdays
+     */
     private int getCarsArrivingHourlyAverage() {
         // Calculate the number of cars that arrive this minute.
         return day < 5 ? weekDayArrivals : weekendArrivals;
     }
-    
+
+    /**
+     * Calculate and return the amount of cars arriving every minute.
+     * @param hourlyAverage the amount of cars arriving hourly
+     * @param random any fresh instance of the java Random class
+     * @return the amount of cars arriving per minute
+     */
     private int getCarsArrivingPerMinute(int hourlyAverage, Random random) {
         // Calculate the number of cars that arrive this minute.
         double standardDeviation = hourlyAverage * 0.1;
@@ -143,6 +186,14 @@ public class SimulatorModel extends AbstractModel implements Runnable {
         CarPark.updateViews();
     }
 
+    /**
+     * Empties the entranceCarQueue and finds parking places
+     * for the corresponding cars. When no parking places can be
+     * found the cars will be directed to the exitCarQueue. Also
+     * calculates how long a car will stay in the parking place.
+     *
+     * @param random any fresh instance of the java Random class
+     */
     private void fillParkingSpacesForTick(Random random) {
         // Remove car from the front of the queue and assign to a parking space.
         for (int i = 0; i < enterSpeed; i++) {
@@ -228,6 +279,12 @@ public class SimulatorModel extends AbstractModel implements Runnable {
         return car;
     }
 
+    /**
+     * Retrieves cars that are leaving this tick. Behaves differently for
+     * each type of Car subclass. ParkingPassCars get send to the exitCarQueue,
+     * Reservations also get send to the exitCarQueue and all other cars
+     * get send to the paymentCarQueue.
+     */
     private void fillExitQueue() {
         while (true) {
             Car car = getFirstLeavingCar();
@@ -254,6 +311,9 @@ public class SimulatorModel extends AbstractModel implements Runnable {
         }
     }
 
+    /**
+     * Retrieve the revenue from cars in the paymentCarQueue.
+     */
     private void getCarPayments() {
         // Let cars pay.
         for (int i = 0; i < paymentSpeed; i++) {
@@ -273,6 +333,9 @@ public class SimulatorModel extends AbstractModel implements Runnable {
         }
     }
 
+    /**
+     * Perform a single step in the simulation.
+     */
     public void tick() {
         advanceTime();
         Random random = new Random();
@@ -286,6 +349,10 @@ public class SimulatorModel extends AbstractModel implements Runnable {
         cleanupExitQueue();
     }
 
+    /**
+     * Let cars leave the exitCarQueue. Amount of cars that can leave
+     * depends on the exitSpeed field.
+     */
     private void cleanupExitQueue() {
         // Cleanup leaving cars queue.
         for (int i = 0; i < exitSpeed; i++) {
@@ -316,6 +383,10 @@ public class SimulatorModel extends AbstractModel implements Runnable {
         return null;
     }
 
+    /**
+     * Gets the first free reservable parking place that is available.
+     * @return null | Location object when free place is found, otherwise null
+     */
     public Location getFirstFreeReservatedLocation() {
         for (int floor = 2; floor < this.getNumberOfFloors(); floor++) {
             for (int row = 0; row < this.getNumberOfRows(); row++) {
@@ -329,18 +400,35 @@ public class SimulatorModel extends AbstractModel implements Runnable {
         return null;
     }
 
+    /**
+     * Retrieve the amount of floors the car park has.
+     * @return amount of floors
+     */
     public int getNumberOfFloors() {
         return numberOfFloors;
     }
 
+    /**
+     * Retrieve the amount of parking places per row the car park has.
+     * @return amount of parking places per row
+     */
     public int getNumberOfPlaces() {
         return numberOfPlaces;
     }
 
+    /**
+     * Retrieve the amount of rows per floor the car park has.
+     * @return amount of rows per floor
+     */
     public int getNumberOfRows() {
         return numberOfRows;
     }
 
+    /**
+     * Checks whether a Location within the car park is valid and existing.
+     * @param loc the location you wish to check
+     * @return either true when the location exists or false if not.
+     */
     private boolean locationIsValid(Location loc) {
         int floor = loc.getFloor();
         int row = loc.getRow();
@@ -348,10 +436,4 @@ public class SimulatorModel extends AbstractModel implements Runnable {
         return !(floor < 0 || floor >= numberOfFloors || row < 0 || row > numberOfRows || place < 0 || place > numberOfPlaces);
     }
 
-    @Override
-    public void run() {
-        // run ticks in a new Thread
-
-
-    }
 }

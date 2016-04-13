@@ -66,7 +66,7 @@ public class SimulatorController extends AbstractController {
     }
 
     /**
-     * @param e actionevent triggered by button.
+     * @param e ActionEvent triggered by button.
      * check if e is a instanceof Jbutton, if so get the source. Check if its a button, if oneStep do a tick.
      *          if hundredStep make a new TickThread with a value of 100.
      *          if its applySimulatorSpeed, change the simulatorspeed, by the value given.

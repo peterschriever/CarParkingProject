@@ -1,8 +1,12 @@
 package nl.hanze.carpark.model;
 
 /**
- * Created by peterzen on 4/5/16.
+ *
+ * The Model super class which is extended by every model
  * Part of the CarParkingProject project.
+ *
+ * @author peter
+ *
  */
 public abstract class AbstractModel {
 

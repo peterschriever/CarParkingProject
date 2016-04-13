@@ -1,10 +1,14 @@
 package nl.hanze.carpark.model;
 
-/**
- * Created by Gabe on 4-4-2016.
- */
-    public class ParkingPassCar extends Car {
 
-        public ParkingPassCar() {
-        }
-    }
+/**
+ * The ParkingPass sub class of Car.
+ *
+ * This class is used to differentiate between normal and permit/pass
+ * holder cars.
+ *
+ * @author Gabe
+ */
+public class ParkingPassCar extends Car {
+
+}

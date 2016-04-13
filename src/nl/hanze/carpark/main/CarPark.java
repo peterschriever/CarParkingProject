@@ -15,8 +15,12 @@ import java.util.Map;
 import java.util.Queue;
 
 /**
- * Created by peterzen on 4/5/16.
- * Part of the CarParkingProject project.
+ *
+ * The programs Main class. This class is the central point from which
+ * Everything gets initiated.
+ *
+ * @author peter
+ *
  */
 public class CarPark {
 
@@ -31,6 +35,10 @@ public class CarPark {
 
     public static int simulationSpeed = 1000;
 
+    /**
+     * The default constructor of CarPark, this starts of the whole program.
+     * The default behaviour is to start the simulator with a tick every 1000ms.
+     */
     public CarPark() {
         // important: first models
         models.put("SimulatorModel", new SimulatorModel(3, 6, 30)); // set the simulator to 3 floors, 6 rows and 30 spaces
@@ -86,18 +94,37 @@ public class CarPark {
         }
     }
 
+    /**
+     * Retrieve the instance of an AbstractController from the CarPark controllers HashMap.
+     * @param controller Name of the controller class you wish to retrieve.
+     * @return This returns either an instance of AbstractController or null if not found.
+     */
     public static AbstractController getController(String controller) {
         return controllers.get(controller) != null ? controllers.get(controller) : null;
     }
 
+    /**
+     * Retrieve the instance of an AbstractModel from the CarPark models HashMap.
+     * @param model Name of the model class you wish to retrieve.
+     * @return This returns either an instance of AbstractModel or null if not found.
+     */
     public static AbstractModel getModel(String model) {
         return models.get(model) != null ? models.get(model) : null;
     }
 
+    /**
+     * Retrieve the instance of an AbstractModel from the CarPark views HashMap.
+     * @param view Name of the view class you wish to retrieve.
+     * @return This returns either an instance of AbstractModel or null if not found.
+     */
     public static AbstractView getView(String view) {
         return views.get(view) != null ? views.get(view) : null;
     }
 
+    /**
+     * Loop through every view in the views HashMap and call its updateView method.
+     * Makes every view in the program effectively repaint.
+     */
     public static void updateViews() {
         for (Object o : views.entrySet()) {
             Map.Entry pair = (Map.Entry) o;

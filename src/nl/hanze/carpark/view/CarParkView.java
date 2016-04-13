@@ -10,9 +10,11 @@ import nl.hanze.carpark.model.ParkingPassCar;
 
 import java.awt.*;
 
+
 /**
- * Created by peterzen on 4/6/16.
- * Part of the CarParkingProject project.
+ * The CarParkView contains the drawing of the actual car park.
+ * This class draws the car park places and colors them when there
+ * is a car using them.
  */
 public class CarParkView extends AbstractView {
     private Dimension size;
@@ -23,6 +25,11 @@ public class CarParkView extends AbstractView {
     private int numberOfRows = 0;
     private int numberOfPlaces = 0;
 
+    /**
+     * The default CarParkView constructor.
+     * This constructor sets the total size for this view and retrieves
+     * the amount of floors, rows and parking places the car park should have.
+     */
     public CarParkView() {
         size = new Dimension(680, 360);
         setSize(size);
@@ -35,6 +42,11 @@ public class CarParkView extends AbstractView {
 
     }
 
+    /**
+     * This method overrides the paintComponent method. To
+     * paint an image of the CarPark.
+     * @param g instance of the java.awt.Graphics class
+     */
     @Override
     public void paintComponent(Graphics g) {
         if(carParkImage == null) {
@@ -44,6 +56,11 @@ public class CarParkView extends AbstractView {
         g.drawImage(carParkImage, 0, 0, null);
     }
 
+    /**
+     * Override of the updateView method from its super class.
+     * This makes sure the Car Park GUI image gets redrawn when
+     * the car park data gets updated.
+     */
     @Override
     public void updateView() {
         // Create a new car park image if the size has changed.
@@ -80,6 +97,14 @@ public class CarParkView extends AbstractView {
         }
     }
 
+    /**
+     * This method draws a single parking place with its corresponding colors
+     * depending on whether there is a car parked.
+     *
+     * @param graphics an instance of the java.awt.Graphics class
+     * @param location the location within the car park to draw
+     * @param color the color to draw this parking place
+     */
     private void drawPlace(Graphics graphics, Location location, Color color) {
         graphics.setColor(color);
         graphics.fillRect((location.getFloor() * 260 + (1 + (int) Math.floor(location.getRow() * 0.5)) * 60 + (location.getRow() % 2) * 20) -59,

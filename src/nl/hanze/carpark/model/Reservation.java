@@ -1,7 +1,13 @@
 package nl.hanze.carpark.model;
 
+
 /**
- * Created by Gabe on 8-4-2016.
+ * The Reservation sub class of Car.
+ *
+ * This class is used to differentiate between normal and reservation
+ * cars.
+ *
+ * @author Gabe
  */
 public class Reservation extends Car {
 

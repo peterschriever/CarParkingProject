@@ -1,5 +1,10 @@
 package nl.hanze.carpark.model;
 
+/**
+ * The Location class is used to remember the location of a
+ * car inside the parking garage. This class can remember the floor,
+ * row and parking place of a Car.
+ */
 public class Location {
 
     private int floor;
