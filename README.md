@@ -13,10 +13,10 @@ CarPark simulation project for school
 Simply download a release, make sure you have Java installed and run the .jar file.
 
 ##Authors
-Pieter Zwart([GitHub profile]: https://github.com/Koetjh)
-Gabe Witteveen([GitHub profile]: https://github.com/GabeLW)
-Mathieu Steenbergen([GitHub profile]: https://github.com/mathieusteen)
-Peter Schriever([GitHub profile]: https://github.com/peterschriever)
+Pieter Zwart([GitHub profile](https://github.com/Koetjh))
+Gabe Witteveen([GitHub profile](https://github.com/GabeLW))
+Mathieu Steenbergen([GitHub profile](https://github.com/mathieusteen))
+Peter Schriever([GitHub profile](https://github.com/peterschriever))
 
 ##Build Instructions
 For now we will only provide build instructions for IntelliJ IDEA.
