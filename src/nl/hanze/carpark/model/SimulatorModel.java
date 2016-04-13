@@ -357,10 +357,16 @@ public class SimulatorModel extends AbstractModel {
         cleanupExitQueue();
     }
 
+    /**
+     * Reset the amount of cars paying per tick.
+     */
     private void resetCarsPaying() {
         carPayPerTick = 0;
     }
 
+    /**
+     * Calculate the amount of revenue for this tick.
+     */
     private void calculateRevenue() {
         revenuePerTick = carPayPerTick * ticketPrice;
     }
@@ -452,10 +458,18 @@ public class SimulatorModel extends AbstractModel {
         return !(floor < 0 || floor >= numberOfFloors || row < 0 || row > numberOfRows || place < 0 || place > numberOfPlaces);
     }
 
+    /**
+     * Getter for the ticketPrice.
+     * @return the current ticket price.
+     */
     public double getTicketPrice() {
         return ticketPrice;
     }
 
+    /**
+     * Getter for the revenuePerTick.
+     * @return the revenue of last tick.
+     */
     public double getRevenuePerTick() {
         return revenuePerTick;
     }

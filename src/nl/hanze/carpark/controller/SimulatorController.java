@@ -107,12 +107,22 @@ public class SimulatorController extends AbstractController {
         }
         return 0;
     }
+
+    /**
+     * Getter for the ticketPrice
+     * @return the amount a normal ticket costs
+     */
     public double getTicketPrice() {
         if (simModel instanceof SimulatorModel) {
             return ((SimulatorModel) simModel).getTicketPrice();
         }
         return 0;
     }
+
+    /**
+     * Getter for the revenuePerTick
+     * @return the amount of revenue from normal tickets in last tick.
+     */
     public double getRevenuePerTick() {
         if (simModel instanceof SimulatorModel) {
             return ((SimulatorModel) simModel).getRevenuePerTick();

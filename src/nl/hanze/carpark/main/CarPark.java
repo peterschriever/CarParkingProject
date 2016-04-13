@@ -26,7 +26,7 @@ public class CarPark {
     private static HashMap<String, AbstractView> views = new HashMap<>();
 
     private static final int width = 1200;
-    private static final int height = 900;
+    private static final int height = 500;
 
     private boolean run;
 
@@ -76,10 +76,10 @@ public class CarPark {
 
         /**
          * Debug: Draw a grid with 10 by 10 squares
-         */
-        gridView = new GridView(width, height);
-        gridView.setBounds(0, 0, width, height);
-        screen.getContentPane().add(gridView);
+//         */
+//        gridView = new GridView(width, height);
+//        gridView.setBounds(0, 0, width, height);
+//        screen.getContentPane().add(gridView);
 
         updateViews();
 
