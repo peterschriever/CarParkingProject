@@ -107,6 +107,18 @@ public class SimulatorController extends AbstractController {
         }
         return 0;
     }
+    public double getTicketPrice() {
+        if (simModel instanceof SimulatorModel) {
+            return ((SimulatorModel) simModel).getTicketPrice();
+        }
+        return 0;
+    }
+    public double getRevenuePerTick() {
+        if (simModel instanceof SimulatorModel) {
+            return ((SimulatorModel) simModel).getRevenuePerTick();
+        }
+        return 0;
+    }
 
 
     /**
